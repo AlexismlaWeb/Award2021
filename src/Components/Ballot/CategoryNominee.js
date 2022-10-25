@@ -7,33 +7,28 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faCheck } from "@fortawesome/free-solid-svg-icons";
 
 const CategoryNominee = (props) => {
-  const [nominee, setNominee] = useState(props.nominees);
   const [nomineeSelected, setNomineeSelected] = useState([]);
 
-  useEffect(async () => {
-    // const SetSelectNominee = () => {
-    //   for (let i = 0; i < nominee.length; i++) {
-    //     // console.log(nominee[i]);
-    //     for (let j = 0; j < nominee[i].items.length; j++) {
-    //       nominee[i].items[j].like = false;
-    //     }
-    //   }
-    // };
-    // SetSelectNominee();
-  }, []);
-
   const LikedNominee = (elm, category) => {
-    if (nomineeSelected.length === 0) {
+    if (nomineeSelected.length === 0 || nomineeSelected.id !== elm.id) {
       setNomineeSelected({
-        ...nomineeSelected,
         category: category,
         id: elm.id,
+        title: elm.title,
       });
     } else if (nomineeSelected.id === elm.id) {
       setNomineeSelected([]);
     }
-    console.log("nomineeSelected", nomineeSelected.length);
   };
+
+  useEffect(() => {
+    const SendToParent = () => {
+      if (nomineeSelected.length !== 0) {
+        props.parentCallback(nomineeSelected);
+      }
+    };
+    SendToParent();
+  }, [nomineeSelected]);
 
   if (props.nominees.length > 0) {
     const nominees = props.nominees.find((ok) => ok.title === props.category);
@@ -41,29 +36,37 @@ const CategoryNominee = (props) => {
     // MAP ALL NOMINEES
     const mapAllNominees = nominees.items.map((elm, index) => {
       return (
-        <div key={index} className="categoryNominee">
-          <img src={elm.photoUrL} alt="nominee" className="img" />
-          <p className="title">{elm.title}</p>
+        <div className="categoryNominee" key={index}>
           {nomineeSelected.id === elm.id ? (
-            <FontAwesomeIcon
-              key={index}
-              icon={faCheck}
-              type="button"
-              className="Button"
-              onClick={() => {
-                LikedNominee(elm, props.category);
-              }}
-            />
+            <div key={index} className="categoryNomineeSelected">
+              <img src={elm.photoUrL} alt="nominee" className="img" />
+              <p className="title">{elm.title}</p>
+              <FontAwesomeIcon
+                key={index}
+                icon={faCheck}
+                type="button"
+                className="ButtonSelected"
+                onClick={() => {
+                  LikedNominee(elm, props.category);
+                  // handleClick();
+                }}
+              />
+            </div>
           ) : (
-            <FontAwesomeIcon
-              key={index}
-              icon={faPlus}
-              type="button"
-              onClick={() => {
-                LikedNominee(elm, props.category);
-              }}
-              className="Button"
-            />
+            <div key={index}>
+              <img src={elm.photoUrL} alt="nominee" className="img" />
+              <p className="title">{elm.title}</p>
+              <FontAwesomeIcon
+                key={index}
+                icon={faPlus}
+                type="button"
+                onClick={() => {
+                  // handleClick();
+                  LikedNominee(elm, props.category);
+                }}
+                className="Button"
+              />
+            </div>
           )}
         </div>
       );

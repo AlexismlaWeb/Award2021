@@ -5,11 +5,18 @@ import api from "../../Api/Api";
 
 const Ballot = () => {
   const [allBallotData, setAllBallotData] = useState([]);
+  const [allNomineeSelected, setAllNomineeSelected] = useState([]);
 
   useEffect(async () => {
     const body = await api.getBallotData();
     setAllBallotData(body.items);
   }, []);
+
+  const handleCallback = (childData) => {
+    setAllNomineeSelected([...allNomineeSelected, childData]);
+  };
+
+  console.log("allnominee dans le papa", allNomineeSelected);
 
   const mapAllCategories = allBallotData.map((category, index) => {
     return (
@@ -17,6 +24,7 @@ const Ballot = () => {
         key={index}
         category={category.title}
         nominees={allBallotData}
+        parentCallback={handleCallback}
       />
     );
   });

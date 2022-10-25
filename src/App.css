@@ -37,8 +37,6 @@
 }
 
 .img {
-  min-width: 15em;
-  min-height: 20em;
   max-width: 15em;
   max-height: 20em;
   margin: 1.5em;
@@ -61,25 +59,41 @@
   margin: 2em;
   background-color: white;
   width: 25%;
-  /* border-radius: 1em; */
-  transition: 0.3s;
+  transition: 0.5s;
+}
+
+.categoryNomineeSelected {
+  transition: 0.5s;
+  width: 100%;
+  border: #348654 2px solid;
+  background-color: #50b074;
 }
 
 .categoryNominee:hover {
   transform: scale(1.04);
 }
 
-.Button {
-  background-color: #50b074;
+.ButtonSelected {
+  background-color: white;
   border: 1px solid #50b074;
-  /* border-radius: 5px; */
   margin: 1em;
   padding: 0.5em;
   border-radius: 50%;
+  transition: 1s;
+}
+
+.Button {
+  background-color: #50b074;
+  border: 1px solid #50b074;
+  margin: 1em;
+  padding: 0.5em;
+  border-radius: 50%;
+  transition: 1s;
 }
 
 .Button:hover {
   background-color: #348654;
+  transition: 1s;
 }
 
 .title {
@@ -124,6 +138,34 @@
   padding: 0.5em;
   width: 30em;
   height: 3.5em;
+}
+
+.alert {
+  padding: 20px;
+  background-color: #f44336;
+  color: white;
+  opacity: 1;
+  transition: opacity 0.6s;
+  margin-bottom: 15px;
+}
+
+.alert.warning {
+  background-color: #ff9800;
+}
+
+.closebtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.closebtn:hover {
+  color: black;
 }
 
 @keyframes App-logo-spin {
